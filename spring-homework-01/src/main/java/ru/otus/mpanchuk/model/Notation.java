@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Answer {
+public class Notation {
     @CsvBindByPosition(position =  0)
     private String question;
 

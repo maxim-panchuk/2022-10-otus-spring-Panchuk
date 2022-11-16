@@ -1,13 +1,13 @@
 package ru.otus.mpanchuk;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import ru.otus.mpanchuk.io.CsvIo;
+import ru.otus.mpanchuk.service.NotationService;
 
 public class Main {
     public static void main(String[] args) {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("/spring-context.xml");
-        CsvIo csvIo = context.getBean(CsvIo.class);
-        csvIo.readCsv();
-        csvIo.outCsv();
+        NotationService ns = context.getBean(NotationService.class);
+        ns.getNotations();
+        ns.printNotations();
     }
 }

@@ -4,8 +4,12 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="csvIo"  class="ru.otus.mpanchuk.io.CsvIo">
-        <constructor-arg name="filePath" value="/Users/maksimpancuk/Desktop/2022-10-otus-spring-Panchuk/spring-homework-01/src/main/resources/file.csv" />
+    <bean id="notationDao" class="ru.otus.mpanchuk.dao.NotationDaoImpl">
+        <constructor-arg name="filepath" value="spring-homework-01/src/main/resources/file.csv" />
+    </bean>
+
+    <bean id="notationService" class="ru.otus.mpanchuk.service.NotationServiceImpl">
+        <constructor-arg name="dao" ref="notationDao" />
     </bean>
 
 </beans>
