@@ -10,7 +10,7 @@ import java.util.List;
 
 public class NotationDaoImpl implements NotationDao {
 
-    String filepath;
+    private final String filepath;
 
     public NotationDaoImpl(String filepath) {
         this.filepath = filepath;

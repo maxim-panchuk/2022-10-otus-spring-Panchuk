@@ -8,7 +8,7 @@ import java.util.List;
 public class NotationServiceImpl implements NotationService {
 
     private final NotationDao dao;
-    List<Notation> list;
+    private List<Notation> list;
 
     public NotationServiceImpl(NotationDao dao) {
         this.dao = dao;
