@@ -1,5 +1,6 @@
 package ru.otus.mpanchuk.service;
 
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.otus.mpanchuk.dao.NotationDao;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.Scanner;
 
 @Service
+@Getter
 public class NotationServiceImpl implements NotationService {
 
     private final NotationDao dao;
@@ -27,7 +29,7 @@ public class NotationServiceImpl implements NotationService {
     }
 
     @Override
-    public void test() {
+    public boolean test() {
         Scanner sc = new Scanner(System.in);
         int count = 0;
         for (int i = 0; i < list.size(); i++) {
@@ -49,6 +51,8 @@ public class NotationServiceImpl implements NotationService {
         if (count < 4) System.out.println("Test isn't passed");
         else {
             System.out.println("Test successfully passed");
+            return true;
         }
+        return false;
     }
 }

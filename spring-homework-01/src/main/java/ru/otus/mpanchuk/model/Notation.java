@@ -1,15 +1,13 @@
 package ru.otus.mpanchuk.model;
 
 import com.opencsv.bean.CsvBindByPosition;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Notation {
     @CsvBindByPosition(position =  0)
     private String question;
