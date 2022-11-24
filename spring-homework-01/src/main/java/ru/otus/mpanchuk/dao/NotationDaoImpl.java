@@ -1,66 +1,54 @@
 package ru.otus.mpanchuk.dao;
 
-import com.opencsv.bean.CsvToBeanBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import ru.otus.mpanchuk.model.Notation;
-
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import ru.otus.mpanchuk.utils.Parser;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 @PropertySource("classpath:property.properties")
 @Component
 public class NotationDaoImpl implements NotationDao {
 
-    private final String filepath;
-    private final String ansFilepath;
+    private final ArrayList<Notation> notationList;
 
-    public NotationDaoImpl(@Value("${file.csvpath}") String filepath,
-                           @Value("${file.anspath}") String ansFilepath) {
-        this.filepath = filepath;
-        this.ansFilepath = ansFilepath;
+    public NotationDaoImpl(@Value("${file.csvpath}") String filepath) {
+        Parser parser = new Parser(filepath);
+        this.notationList = parser.parseNotations();
     }
 
     @Override
-    public List<Notation> getAllQuestions() {
-        List<Notation> list = new ArrayList<>();
-        try {
-            List<Notation> refs = new CsvToBeanBuilder(new FileReader(filepath))
-                    .withType(Notation.class)
-                    .withSeparator(';')
-                    .build()
-                    .parse();
-            list.addAll(refs);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return list;
+    public ArrayList<Notation> getAllNotations() {
+        return this.notationList;
     }
 
     @Override
-    public ArrayList<String> getAllAnswers() {
-
-        ArrayList<String> list = new ArrayList<>();
-
-        try {
-            FileReader fr = new FileReader(ansFilepath);
-            Scanner scanner = new Scanner(fr);
-
-            while (scanner.hasNextLine()) {
-                String[] line = scanner.nextLine().split(":");
-                list.add(line[1]);
-            }
-
-            fr.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+    public String getQuestionById(String id) {
+        for (Notation item : notationList) {
+            if (id.equals(item.getId())) return item.getQuestion();
         }
+        return null;
+    }
 
-        return list;
+    @Override
+    public String getAnswersById(String id) {
+        for (Notation item : notationList) {
+            if (id.equals(item.getId())) return item.getAnswers();
+        }
+        return null;
+    }
+
+    @Override
+    public String getRightAnswerById(String id) {
+        for (Notation item : notationList) {
+            if (id.equals(item.getId())) return item.getRightAns();
+        }
+        return null;
+    }
+
+    @Override
+    public Integer getTestSize() {
+        return this.notationList.size();
     }
 }

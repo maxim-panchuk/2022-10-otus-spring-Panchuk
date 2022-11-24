@@ -4,6 +4,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import ru.otus.mpanchuk.service.NotationService;
+import ru.otus.mpanchuk.service.TestServiceImpl;
 
 @ComponentScan
 @Configuration
@@ -12,8 +13,7 @@ public class Main {
         AnnotationConfigApplicationContext ctx =
                 new AnnotationConfigApplicationContext(Main.class);
 
-        NotationService ns = ctx.getBean(NotationService.class);
-        ns.getNotations();
-        ns.test();
+        TestServiceImpl tsi = ctx.getBean(TestServiceImpl.class);
+        tsi.test();
     }
 }

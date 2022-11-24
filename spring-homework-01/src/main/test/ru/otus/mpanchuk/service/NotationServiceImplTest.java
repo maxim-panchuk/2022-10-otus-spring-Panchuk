@@ -16,26 +16,28 @@ public class NotationServiceImplTest {
     private NotationServiceImpl notationService;
 
     @InjectMocks
-    private NotationDaoImpl notationDao = new NotationDaoImpl("src/main/test/ru/otus/mpanchuk/testNotation.csv"
-            , "src/main/test/ru/otus/mpanchuk/testAnswer.csv");
+    private NotationDaoImpl notationDao = new NotationDaoImpl("src/main/test/ru/otus/mpanchuk/testNotation.csv");
 
     @BeforeEach
     void initNotation() {
         notationService = new NotationServiceImpl(notationDao);
-        notationService.getNotations();
     }
 
     @Test
-    @DisplayName("Должен правильно инициализировать ответ")
-    void shouldInitAnsListProp() {
-        Assertions.assertEquals(notationService.getAns().get(0), "8");
+    @DisplayName("Должен правильно возвращать результат тестирования")
+    void shouldPassTest() {
+        String testAns = "3";
+        boolean ans = notationService.isAnswerRight("1", testAns);
+        boolean act = true;
+        Assertions.assertEquals(ans, act);
     }
 
     @Test
-    @DisplayName("Должен правильно инициализировать вопрос")
-    void shouldInitQuestionListProp() {
-        Assertions.assertEquals(notationService.getList().get(0).toString(), "1) 2 * 4 =  7,8,10");
+    @DisplayName("Должен провалить тестирование")
+    void shouldFallTest() {
+        String testAns = "2";
+        boolean ans = notationService.isAnswerRight("1", testAns);
+        boolean act = false;
+        Assertions.assertEquals(ans, act);
     }
-
-
 }

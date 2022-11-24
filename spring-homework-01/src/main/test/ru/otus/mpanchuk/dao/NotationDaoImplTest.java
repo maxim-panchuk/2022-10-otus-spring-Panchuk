@@ -9,35 +9,49 @@ import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.otus.mpanchuk.model.Notation;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @ExtendWith(MockitoExtension.class)
 @DisplayName("Тест компонента DAO Notation")
 public class NotationDaoImplTest {
 
     @InjectMocks
-    private NotationDaoImpl notationDao = new NotationDaoImpl("src/main/test/ru/otus/mpanchuk/testNotation.csv"
-            , "src/main/test/ru/otus/mpanchuk/testAnswer.csv");
+    private NotationDaoImpl notationDao = new NotationDaoImpl("src/main/test/ru/otus/mpanchuk/testNotation.csv");
 
     private Notation notation;
 
     @BeforeEach
     void initNotation() {
-        notation = Notation.builder().question("1) 2 * 4 = ").answers("7,8,10").build();
+        notation = Notation.builder().id("1").question("1 + 2 = ").answers("2,3,4").rightAns("3").build();
     }
 
     @Test
-    @DisplayName("Должен правильно парсить Notation")
-    void shouldParseQuestion() {
-        List<Notation> list = notationDao.getAllQuestions();
-        Assertions.assertEquals(notation.toString(), list.get(0).toString());
+    @DisplayName("Должен правильно возвращать Question")
+    void shouldGetQuestion() {
+        String actualQ = notation.getQuestion();
+        String testQ = notationDao.getQuestionById(notation.getId());
+        Assertions.assertEquals(actualQ, testQ);
     }
 
     @Test
-    @DisplayName("Должен правильно парсить ответ")
-    void shouldParseAnswer() {
-        ArrayList<String> list = notationDao.getAllAnswers();
-        Assertions.assertEquals(list.get(0), "8");
+    @DisplayName("Должен правильно возвращать Answers")
+    void shouldGetAnswers() {
+        String actualA = notation.getAnswers();
+        String testA = notationDao.getAnswersById(notation.getId());
+        Assertions.assertEquals(actualA, testA);
+    }
+
+    @Test
+    @DisplayName("Должен правильно возвращать RightAnswer")
+    void shouldGetRightAnswer() {
+        String actualA = notation.getRightAns();
+        String testA = notationDao.getRightAnswerById(notation.getId());
+        Assertions.assertEquals(actualA, testA);
+    }
+
+    @Test
+    @DisplayName("Должен правильно возвращать Размер теста")
+    void shouldGetSize() {
+        int actualS = 1;
+        int testS = notationDao.getTestSize();
+        Assertions.assertEquals(actualS, testS);
     }
 }
